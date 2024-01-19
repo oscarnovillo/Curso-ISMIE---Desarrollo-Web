@@ -1,0 +1,10 @@
+POST http://localhost:80/rest
+Content-Type: application/json
+
+{
+  "alumno":   "12345678A",
+    "asignatura": "FIS",
+      "nota": 10
+}
+
+###
