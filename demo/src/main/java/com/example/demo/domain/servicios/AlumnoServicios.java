@@ -26,8 +26,20 @@ public class AlumnoServicios {
         return alumnoRepository.findAll();
     }
 
+    public Alumno findAlumno(int id) {
+        return alumnoRepository.findAlumno(id);
+    }
+
     public int insertAlumno(Alumno alumno) {
         return alumnoRepository.insertAlumno(alumno);
+    }
+
+    public int deleteAlumno(int id) {
+        return alumnoRepository.deleteAlumno(id);
+    }
+
+    public int updateAlumno(Alumno alumno) {
+        return alumnoRepository.updateAlumno(alumno);
     }
 
 

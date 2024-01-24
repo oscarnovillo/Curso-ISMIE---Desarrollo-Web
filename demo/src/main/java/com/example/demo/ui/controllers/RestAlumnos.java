@@ -5,10 +5,8 @@ import com.example.demo.data.modelo.Alumno;
 import com.example.demo.domain.modelo.AlumnoModelo;
 import com.example.demo.domain.modelo.AlumnoPost;
 import com.example.demo.domain.servicios.AlumnoServicios;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +27,29 @@ public class RestAlumnos {
         return  alumnoServicios.findAll();
     }
 
-    @PostMapping("/alumnos")
+    @GetMapping("/api/alumnos/{id}")
+    public Alumno getAlumno(@PathVariable int id) {
+
+        return  alumnoServicios.findAlumno(id);
+    }
+
+    @PostMapping("/api/alumnos")
+    @ResponseStatus(code = HttpStatus.CREATED)
     public Alumno indexPost(@RequestBody Alumno alumno) {
         alumnoServicios.insertAlumno(alumno);
+        return alumno;
+    }
+
+
+    @DeleteMapping("/api/alumnos/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteAlumno(@PathVariable int id) {
+        alumnoServicios.deleteAlumno(id);
+    }
+
+    @PutMapping("/api/alumnos")
+    public Alumno updateAlumno(@RequestBody Alumno alumno) {
+        alumnoServicios.updateAlumno(alumno);
         return alumno;
     }
 }
