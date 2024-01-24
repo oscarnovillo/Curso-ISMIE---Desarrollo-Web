@@ -1,6 +1,6 @@
 package com.example.demo.domain.modelo;
 
-public record Alumno(
+public record AlumnoModelo(
         String nombre,
         String apellido,
         String dni,
