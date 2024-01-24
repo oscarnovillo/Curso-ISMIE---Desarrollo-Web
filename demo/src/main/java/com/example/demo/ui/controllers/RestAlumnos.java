@@ -3,9 +3,11 @@ package com.example.demo.ui.controllers;
 
 import com.example.demo.data.modelo.Alumno;
 import com.example.demo.domain.modelo.AlumnoModelo;
+import com.example.demo.domain.modelo.AlumnoPost;
 import com.example.demo.domain.servicios.AlumnoServicios;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,15 +23,15 @@ public class RestAlumnos {
         this.alumnoServicios = alumnoServicios;
     }
 
-    @GetMapping("/rest")
+    @GetMapping("/api/alumnos")
     public List<Alumno> index() {
 
         return  alumnoServicios.findAll();
     }
 
-    @PostMapping("/rest")
-    public AlumnoModelo indexPost() {
-
-        return new AlumnoModelo("juan","a", "1234", "sdfsdf@asd" );
+    @PostMapping("/alumnos")
+    public Alumno indexPost(@RequestBody Alumno alumno) {
+        alumnoServicios.insertAlumno(alumno);
+        return alumno;
     }
 }

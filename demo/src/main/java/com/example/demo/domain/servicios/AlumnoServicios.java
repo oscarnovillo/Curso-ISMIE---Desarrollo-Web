@@ -23,8 +23,13 @@ public class AlumnoServicios {
 
 
     public List<Alumno> findAll() {
-
         return alumnoRepository.findAll();
-
     }
+
+    public int insertAlumno(Alumno alumno) {
+        return alumnoRepository.insertAlumno(alumno);
+    }
+
+
+
 }

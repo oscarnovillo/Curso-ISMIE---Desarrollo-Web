@@ -3,10 +3,13 @@ package com.example.demo.data.modelo;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Alumno {
 
-    private final int id;
-    private final String name;
+    private int id;
+    private String name;
 
 }

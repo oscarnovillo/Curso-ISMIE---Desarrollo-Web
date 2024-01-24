@@ -22,4 +22,10 @@ public class AlumnoRepository {
         return jdbcClient.sql("select * from alumnos")
                 .query(Alumno.class).list();
     }
+
+    public int insertAlumno(Alumno alumno) {
+        return jdbcClient.sql("insert into alumnos (name) values (?)")
+                .param(1,alumno.getName())
+                .update();
+    }
 }
