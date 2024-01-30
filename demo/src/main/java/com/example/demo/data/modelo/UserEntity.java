@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-import java.util.UUID;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,6 +26,16 @@ public class UserEntity {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private List<RolesEntity> permisos;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private List<VisitaEntity> visitas;
 
 
 
