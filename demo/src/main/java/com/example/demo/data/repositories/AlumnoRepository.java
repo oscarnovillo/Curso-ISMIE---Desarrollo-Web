@@ -1,7 +1,6 @@
 package com.example.demo.data.repositories;
 
 import com.example.demo.data.modelo.Alumno;
-import com.example.demo.domain.modelo.AlumnoModelo;
 import com.example.demo.ui.errores.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

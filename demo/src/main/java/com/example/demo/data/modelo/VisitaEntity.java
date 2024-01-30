@@ -37,7 +37,7 @@ public class VisitaEntity {
         inverseJoinColumns = @JoinColumn(name = "poi_id"))
     private List<PoiEntity> pois;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 }

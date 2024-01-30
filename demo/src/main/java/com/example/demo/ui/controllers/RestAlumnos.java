@@ -2,8 +2,6 @@ package com.example.demo.ui.controllers;
 
 
 import com.example.demo.data.modelo.Alumno;
-import com.example.demo.domain.modelo.AlumnoModelo;
-import com.example.demo.domain.modelo.AlumnoPost;
 import com.example.demo.domain.servicios.AlumnoServicios;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

@@ -1,11 +1,13 @@
 package com.example.demo.data.repositories;
 
 import com.example.demo.data.modelo.UserEntity;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,4 +18,12 @@ public interface UserRepository extends ListCrudRepository<UserEntity, UUID> {
 //    @Override
 //    Optional<UserEntity> findById(@Param(value = "id") UUID id);
 
+
+
+    @EntityGraph(attributePaths = {"permisos"})
+    @Query("select u from UserEntity u")
+    List<UserEntity> getAllWithPermisos();
+
+    @EntityGraph(attributePaths = {"visitas"})
+    Optional<UserEntity> findWithVisitasById(Long id);
 }

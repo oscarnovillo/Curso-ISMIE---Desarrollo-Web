@@ -31,7 +31,7 @@ public class DemoApplication {
         return args -> {
             Logger logger = LoggerFactory.getLogger(CommandLineRunner.class);
             UserEntity user = UserEntity.builder()
-                    .id(0L)
+                    .id(11L)
                     .name("Pedro")
                     .password("1234")
                     .build();

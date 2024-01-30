@@ -3,13 +3,14 @@ insert into alumnos (name) values ('Juanito');
 insert into alumnos (name) values ('Jorgito');
 insert into alumnos (name) values ('Jaimito');
 
+delete from visitas_pois;
+delete from user_roles;
 delete from pois;
 delete from ciudades;
 delete from roles;
-delete from users;
-delete from user_roles;
 delete from visitas;
-delete from visitas_pois;
+delete from users;
+
 
 
 insert into roles (id,rol) values (1,'ROLE_ADMIN');
