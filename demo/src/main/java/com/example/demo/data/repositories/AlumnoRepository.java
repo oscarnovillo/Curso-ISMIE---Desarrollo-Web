@@ -3,6 +3,8 @@ package com.example.demo.data.repositories;
 import com.example.demo.data.modelo.Alumno;
 import com.example.demo.domain.modelo.AlumnoModelo;
 import com.example.demo.ui.errores.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -13,7 +15,7 @@ import java.util.List;
 @Repository
 public class AlumnoRepository {
 
-
+    Logger logger = LoggerFactory.getLogger(AlumnoRepository.class);
     private final JdbcClient jdbcClient;
 
     public AlumnoRepository(JdbcClient jdbcClient) {
@@ -21,6 +23,7 @@ public class AlumnoRepository {
     }
 
     public List<Alumno> findAll() {
+        logger.debug("AlumnoRepository.findAll()");
         return jdbcClient.sql("select * from alumnos")
                 .query(Alumno.class).list();
     }

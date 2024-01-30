@@ -5,6 +5,7 @@ import com.example.demo.data.modelo.Alumno;
 import com.example.demo.domain.modelo.AlumnoModelo;
 import com.example.demo.domain.modelo.AlumnoPost;
 import com.example.demo.domain.servicios.AlumnoServicios;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ public class RestAlumnos {
 
     @PostMapping("/api/alumnos")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Alumno indexPost(@RequestBody Alumno alumno) {
+    public Alumno indexPost(@Valid @RequestBody Alumno alumno) {
         alumnoServicios.insertAlumno(alumno);
         return alumno;
     }
