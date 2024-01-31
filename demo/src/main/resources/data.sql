@@ -17,15 +17,15 @@ insert into roles (id,rol) values (1,'ROLE_ADMIN');
 insert into roles (id,rol) values (2,'ROLE_USER');
 
 insert into users (id,name,password) values (1,'admin','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
-insert into users (id,name,password) values (2,'pedro','pedro');
-insert into users (id,name,password) values (3,'juan','juan');
-insert into users (id,name,password) values (4,'jose','jose');
-insert into users (id,name,password) values (5,'luis','luis');
-insert into users (id,name,password) values (6,'maria','maria');
-insert into users (id,name,password) values (7,'ana','ana');
-insert into users (id,name,password) values (8,'laura','laura');
-insert into users (id,name,password) values (9,'pilar','pilar');
-insert into users (id,name,password) values (10,'carmen','carmen');
+insert into users (id,name,password) values (2,'pedro','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
+insert into users (id,name,password) values (3,'juan','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
+insert into users (id,name,password) values (4,'jose','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
+insert into users (id,name,password) values (5,'luis','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
+insert into users (id,name,password) values (6,'maria','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
+insert into users (id,name,password) values (7,'ana','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
+insert into users (id,name,password) values (8,'laura','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
+insert into users (id,name,password) values (9,'pilar','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
+insert into users (id,name,password) values (10,'carmen','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
 
 insert into user_roles (user_id,roles_id) values (1,1);
 insert into user_roles (user_id,roles_id) values (2,2);

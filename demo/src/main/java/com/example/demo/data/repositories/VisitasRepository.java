@@ -4,6 +4,11 @@ import com.example.demo.data.modelo.VisitaEntity;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface VisitaRepository extends ListCrudRepository<VisitaEntity, Long>{
+public interface VisitasRepository extends ListCrudRepository<VisitaEntity, Long>{
+
+
+    List<VisitaEntity> findAllByUser_Name(String userName);
 }
