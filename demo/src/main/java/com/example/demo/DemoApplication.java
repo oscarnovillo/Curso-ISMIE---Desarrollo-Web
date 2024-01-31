@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class DemoApplication {
     @Bean
     CommandLineRunner runner(
             AlumnoServicios alumnoServicios,
+            PasswordEncoder encoder,
             UserRepository userRepository
             ) {
         return args -> {
@@ -33,7 +35,7 @@ public class DemoApplication {
             UserEntity user = UserEntity.builder()
                     .id(11L)
                     .name("Pedro")
-                    .password("1234")
+                    .password(encoder.encode("1234"))
                     .build();
             userRepository.save(user);
 

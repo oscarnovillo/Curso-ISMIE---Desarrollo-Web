@@ -16,7 +16,7 @@ delete from users;
 insert into roles (id,rol) values (1,'ROLE_ADMIN');
 insert into roles (id,rol) values (2,'ROLE_USER');
 
-insert into users (id,name,password) values (1,'admin','admin');
+insert into users (id,name,password) values (1,'admin','$2a$10$aguIiT4W2Ki1eX9CijS8B.GDbc8eMP0dh0NbGdkyrJmz67wBl2tY2');
 insert into users (id,name,password) values (2,'pedro','pedro');
 insert into users (id,name,password) values (3,'juan','juan');
 insert into users (id,name,password) values (4,'jose','jose');

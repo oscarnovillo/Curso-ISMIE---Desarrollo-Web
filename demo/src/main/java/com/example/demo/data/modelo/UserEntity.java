@@ -1,6 +1,5 @@
 package com.example.demo.data.modelo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,7 +33,7 @@ public class UserEntity {
         name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    private Set<RolesEntity> permisos;
+    private Set<RolesEntity> roles;
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)

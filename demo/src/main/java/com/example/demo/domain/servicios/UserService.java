@@ -19,7 +19,7 @@ public class UserService {
         return userRepository.getAllWithPermisos().stream().map(
                 userEntity ->
                 {
-                    List<Rol> roles = userEntity.getPermisos().stream().map(
+                    List<Rol> roles = userEntity.getRoles().stream().map(
                             rolEntity ->
                                     new Rol(rolEntity.getId(),
                                             rolEntity.getRol()
@@ -97,7 +97,7 @@ public class UserService {
                                             ).toList()
                                     )
                     ).toList();
-                    List<Rol> roles = userEntity.getPermisos().stream().map(
+                    List<Rol> roles = userEntity.getRoles().stream().map(
                             rolEntity ->
                                     new Rol(rolEntity.getId(),
                                             rolEntity.getRol()

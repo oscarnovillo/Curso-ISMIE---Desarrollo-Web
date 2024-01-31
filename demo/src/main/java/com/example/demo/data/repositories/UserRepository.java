@@ -18,9 +18,10 @@ public interface UserRepository extends ListCrudRepository<UserEntity, UUID> {
 //    @Override
 //    Optional<UserEntity> findById(@Param(value = "id") UUID id);
 
+    @EntityGraph(attributePaths = {"roles"})
+    Optional<UserEntity> findByName(String name);
 
-
-    @EntityGraph(attributePaths = {"permisos"})
+    @EntityGraph(attributePaths = {"roles"})
     @Query("select u from UserEntity u")
     List<UserEntity> getAllWithPermisos();
 
@@ -29,7 +30,7 @@ public interface UserRepository extends ListCrudRepository<UserEntity, UUID> {
 
     @Query(""" 
     select u from UserEntity u 
-    JOIN FETCH u.permisos permisos
+    JOIN FETCH u.roles permisos
     JOIN FETCH u.visitas v
     JOIN FETCH v.pois p
     JOIN FETCH p.ciudad c
