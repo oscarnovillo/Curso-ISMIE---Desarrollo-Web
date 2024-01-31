@@ -26,4 +26,14 @@ public interface UserRepository extends ListCrudRepository<UserEntity, UUID> {
 
     @EntityGraph(attributePaths = {"visitas"})
     Optional<UserEntity> findWithVisitasById(Long id);
+
+    @Query(""" 
+    select u from UserEntity u 
+    JOIN FETCH u.permisos permisos
+    JOIN FETCH u.visitas v
+    JOIN FETCH v.pois p
+    JOIN FETCH p.ciudad c
+    where u.id = :id
+    """)
+    Optional<UserEntity> findEnteroById(Long id);
 }

@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "visitas")
@@ -35,7 +36,7 @@ public class VisitaEntity {
         name = "visitas_pois",
         joinColumns = @JoinColumn(name = "visita_id"),
         inverseJoinColumns = @JoinColumn(name = "poi_id"))
-    private List<PoiEntity> pois;
+    private Set<PoiEntity> pois;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

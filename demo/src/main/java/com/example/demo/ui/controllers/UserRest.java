@@ -2,6 +2,7 @@ package com.example.demo.ui.controllers;
 
 import com.example.demo.data.modelo.UserEntity;
 import com.example.demo.domain.modelo.User;
+import com.example.demo.domain.modelo.UserEnteroDTO;
 import com.example.demo.domain.modelo.UserVisitasDTO;
 import com.example.demo.domain.servicios.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,11 @@ public class UserRest {
     public UserVisitasDTO getUser(@PathVariable Long id)
     {
         return userService.getById(id);
+    }
+    @GetMapping("/all/{id}")
+    public UserEnteroDTO getUserEntero(@PathVariable Long id)
+    {
+        return userService.getEnteroById(id);
     }
 
 }

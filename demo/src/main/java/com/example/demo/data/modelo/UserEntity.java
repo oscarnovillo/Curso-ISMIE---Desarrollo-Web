@@ -6,6 +6,7 @@ import lombok.*;
 
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -33,7 +34,7 @@ public class UserEntity {
         name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    private List<RolesEntity> permisos;
+    private Set<RolesEntity> permisos;
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)

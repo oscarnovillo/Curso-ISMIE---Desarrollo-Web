@@ -70,4 +70,46 @@ public class UserService {
                 }
         ).orElseThrow();
     }
+
+    public UserEnteroDTO getEnteroById(Long id) {
+        return userRepository.findEnteroById(id).map(
+                userEntity ->
+                {
+                    List<Visita> visitas = userEntity.getVisitas().stream().map(
+                            visitaEntity ->
+                                    new Visita(
+                                            visitaEntity.getId(),
+                                            visitaEntity.getFechaInicial(),
+                                            visitaEntity.getFechaFinal(),
+                                            visitaEntity.getPois().stream().map(
+                                                    poiEntity ->
+                                                            new Poi(
+                                                                    poiEntity.getId(),
+                                                                    poiEntity.getLatitud(),
+                                                                    poiEntity.getLongitud(),
+                                                                    poiEntity.getNombre(),
+                                                                    poiEntity.getTipo(),
+                                                                    new Ciudad(
+                                                                            poiEntity.getCiudad().getId(),
+                                                                            poiEntity.getCiudad().getNombre()
+                                                                    )
+                                                            )
+                                            ).toList()
+                                    )
+                    ).toList();
+                    List<Rol> roles = userEntity.getPermisos().stream().map(
+                            rolEntity ->
+                                    new Rol(rolEntity.getId(),
+                                            rolEntity.getRol()
+                                    )
+                    ).toList();
+                    return new UserEnteroDTO(userEntity.getId(),
+                            userEntity.getName(),
+                            "",
+                            roles,
+                            visitas
+                    );
+                }
+        ).orElseThrow();
+    }
 }
