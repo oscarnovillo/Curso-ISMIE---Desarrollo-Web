@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.ui.config;
 
 
 import com.example.demo.data.repositories.UserRepository;

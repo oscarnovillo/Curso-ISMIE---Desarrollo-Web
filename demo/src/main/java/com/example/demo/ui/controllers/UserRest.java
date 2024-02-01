@@ -5,10 +5,7 @@ import com.example.demo.domain.modelo.User;
 import com.example.demo.domain.modelo.UserEnteroDTO;
 import com.example.demo.domain.modelo.UserVisitasDTO;
 import com.example.demo.domain.servicios.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,5 +36,12 @@ public class UserRest {
     {
         return userService.getEnteroById(id);
     }
+
+    @PostMapping()
+    public User saveUserEntero(@RequestBody User user)
+    {
+        return userService.save(user);
+    }
+
 
 }

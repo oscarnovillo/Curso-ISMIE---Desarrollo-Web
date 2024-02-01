@@ -1,5 +1,6 @@
 package com.example.demo.domain.servicios;
 
+import com.example.demo.data.modelo.UserEntity;
 import com.example.demo.data.repositories.UserRepository;
 import com.example.demo.domain.modelo.*;
 import org.springframework.stereotype.Service;
@@ -111,5 +112,23 @@ public class UserService {
                     );
                 }
         ).orElseThrow();
+    }
+
+    public User save(User user) {
+
+        UserEntity userEntity = userRepository.save(new UserEntity(
+                0L,
+                user.nombre(),
+                user.password(),
+                null,
+                null
+
+        ));
+
+        return new User(userEntity.getId(),
+                userEntity.getName(),
+                userEntity.getPassword(),
+                null);
+
     }
 }
