@@ -30,9 +30,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         return User.builder()
                 .username(user.getName())
                 .password(user.getPassword())
-                .roles("ADMIN")
-//                        user.getPermisos().stream()
-//                                .map(RolesEntity::getRol).collect(Collectors.joining(",")))
+                .roles(
+                        user.getRoles().stream()
+                                .map(RolesEntity::getRol).collect(Collectors.joining(",")))
                 .build();
 
     }

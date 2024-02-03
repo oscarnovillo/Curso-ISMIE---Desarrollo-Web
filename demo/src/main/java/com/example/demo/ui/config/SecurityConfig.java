@@ -1,10 +1,12 @@
 package com.example.demo.ui.config;
 
+import com.example.demo.ui.auth.SessionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,10 +20,15 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true,
+        prePostEnabled = true,
+        jsr250Enabled = true
+)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
+    private final SessionFilter sessionFilter;
 
 
     @Bean
@@ -40,19 +47,22 @@ public class SecurityConfig {
 //                                .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
                         req
 //                                .requestMatchers(POST,"/**").permitAll()
+                                .requestMatchers("/api/auth/login").permitAll()
+                                .requestMatchers("/api/alumnos").hasRole("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )
 //                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
+                //.httpBasic(Customizer.withDefaults())
+                //.formLogin(Customizer.withDefaults())
 //                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-//                .logout(logout ->
-//                        logout.logoutUrl("/api/v1/auth/logout")
-//                                .addLogoutHandler(logoutHandler)
-//                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-//                )
+                .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout(logout ->
+                        logout.logoutUrl("/api/auth/logout")
+                                .addLogoutHandler((request, response, authentication) -> request.getSession().removeAttribute("LOGIN"))
+                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                )
         ;
 
         return http.build();

@@ -3,8 +3,11 @@ package com.example.demo.ui.controllers;
 
 import com.example.demo.data.modelo.Alumno;
 import com.example.demo.domain.servicios.AlumnoServicios;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,11 +24,13 @@ public class RestAlumnos {
     }
 
     @GetMapping("/api/alumnos")
+    @Secured("ROLE_ADMIN")
     public List<Alumno> index() {
 
         return  alumnoServicios.findAll();
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/api/alumnos/{id}")
     public Alumno getAlumno(@PathVariable int id) {
 
