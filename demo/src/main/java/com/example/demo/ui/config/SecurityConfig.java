@@ -29,7 +29,8 @@ public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
     private final SessionFilter sessionFilter;
-
+    private static final String[] WHITE_LIST_URL = {"/graphiql",
+            "/graphql"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -47,6 +48,9 @@ public class SecurityConfig {
 //                                .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
                         req
 //                                .requestMatchers(POST,"/**").permitAll()
+                                .requestMatchers(GET,WHITE_LIST_URL).permitAll()
+                                .requestMatchers(POST,WHITE_LIST_URL).permitAll()
+
                                 .requestMatchers("/api/auth/login").permitAll()
                                 .requestMatchers("/api/alumnos").hasRole("ADMIN")
                                 .anyRequest()
@@ -55,7 +59,7 @@ public class SecurityConfig {
 //                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 //.httpBasic(Customizer.withDefaults())
-                //.formLogin(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
 //                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->

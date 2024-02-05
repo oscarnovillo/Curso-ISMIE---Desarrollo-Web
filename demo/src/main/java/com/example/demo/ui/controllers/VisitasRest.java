@@ -1,7 +1,9 @@
 package com.example.demo.ui.controllers;
 
 import com.example.demo.domain.modelo.VisitaDTO;
+import com.example.demo.domain.modelo.mappers.VisitaMapper;
 import com.example.demo.domain.servicios.VisitasService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,22 +14,21 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class VisitasRest {
 
     private final VisitasService visitasService;
+    private final VisitaMapper visitaMapper;
 
 
-    public VisitasRest(VisitasService visitasService) {
-        this.visitasService = visitasService;
-    }
 
     @GetMapping("/visitas")
     public List<VisitaDTO> getVisitas(Principal principal){
         log.info(principal.getName());
 
-//        return null;
         return visitasService.getAllByUserName(principal.getName());
+
     }
 
 }
