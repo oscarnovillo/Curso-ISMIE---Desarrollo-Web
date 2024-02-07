@@ -1,5 +1,6 @@
 package com.example.demo.ui.config;
 
+import com.example.demo.ui.auth.JwtAuthenticationFilter;
 import com.example.demo.ui.auth.SessionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpMethod.DELETE;
@@ -29,6 +31,8 @@ public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
     private final SessionFilter sessionFilter;
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final LogoutHandler logoutHandler;
     private static final String[] WHITE_LIST_URL = {"/graphiql",
             "/graphql"};
 
@@ -52,19 +56,22 @@ public class SecurityConfig {
                                 .requestMatchers(POST,WHITE_LIST_URL).permitAll()
 
                                 .requestMatchers("/api/auth/login").permitAll()
+                                .requestMatchers("/api/auth/loginToken").permitAll()
                                 .requestMatchers("/api/alumnos").hasRole("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )
-//                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 //.httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
+                //.formLogin(Customizer.withDefaults())
 //                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
                         logout.logoutUrl("/api/auth/logout")
                                 .addLogoutHandler((request, response, authentication) -> request.getSession().removeAttribute("LOGIN"))
+                                .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )
         ;

@@ -2,7 +2,7 @@ delete from alumnos;
 insert into alumnos (name) values ('Juanito');
 insert into alumnos (name) values ('Jorgito');
 insert into alumnos (name) values ('Jaimito');
-
+delete from tokens;
 delete from visitas_pois;
 delete from user_roles;
 delete from pois;

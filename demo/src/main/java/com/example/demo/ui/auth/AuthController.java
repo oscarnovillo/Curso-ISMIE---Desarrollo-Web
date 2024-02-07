@@ -3,7 +3,6 @@ package com.example.demo.ui.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,6 +18,7 @@ import java.security.Principal;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
+    private final AuthenticationService authenticationService;
 
 
     @GetMapping("/login")
@@ -43,13 +43,8 @@ public class AuthController {
 
 
     @GetMapping("/loginToken")
-    public String loginToken(@RequestBody AuthRequest requestAuth, HttpServletRequest request) {
-        Authentication auth =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestAuth.username(),requestAuth.password()));
-
-        SecurityContextHolder.getContext().setAuthentication(auth);
-
-        return "token";
+    public AuthenticationResponse loginToken(@RequestBody AuthenticationRequest requestAuth, HttpServletRequest request) {
+        return authenticationService.authenticate(requestAuth);
     }
 
 }
