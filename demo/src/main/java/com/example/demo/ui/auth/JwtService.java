@@ -68,6 +68,8 @@ public class JwtService {
             UserDetails userDetails,
             long expiration
     ) {
+
+
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -104,7 +106,7 @@ public class JwtService {
 
         final MessageDigest digest;
         try {
-            digest = MessageDigest.getInstance("SHA-512");
+            digest = MessageDigest.getInstance("SHA-256");
             digest.update(secretKey.getBytes(StandardCharsets.UTF_8));
             final SecretKeySpec key2 = new SecretKeySpec(
                     digest.digest(), 0, 64, "AES");

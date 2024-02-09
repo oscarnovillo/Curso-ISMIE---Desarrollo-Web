@@ -19,7 +19,9 @@ public class SessionFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getSession().getAttribute("LOGIN") != null)
         {
-            SecurityContextHolder.getContext().setAuthentication((org.springframework.security.core.Authentication) request.getSession().getAttribute("LOGIN"));
+            SecurityContextHolder.getContext().setAuthentication(
+                    (org.springframework.security.core.Authentication)
+                            request.getSession().getAttribute("LOGIN"));
         }
 
         filterChain.doFilter(request, response);

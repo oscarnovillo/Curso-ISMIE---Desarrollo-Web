@@ -5,6 +5,8 @@ import com.example.demo.domain.modelo.User;
 import com.example.demo.domain.modelo.UserEnteroDTO;
 import com.example.demo.domain.modelo.UserVisitasDTO;
 import com.example.demo.domain.servicios.UserService;
+import jakarta.annotation.security.RolesAllowed;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 public class UserRest {
 
 
+
     private final UserService userService;
 
     public UserRest(UserService userService) {
@@ -21,13 +24,14 @@ public class UserRest {
     }
 
     @GetMapping("")
+    @RolesAllowed("ADMIN")
     public List<User> getAll()
     {
         return userService.getAll();
     }
 
     @GetMapping("/{id}")
-    public UserVisitasDTO getUser(@PathVariable Long id)
+        public UserVisitasDTO getUser(@PathVariable Long id)
     {
         return userService.getById(id);
     }

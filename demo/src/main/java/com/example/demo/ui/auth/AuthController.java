@@ -25,7 +25,8 @@ public class AuthController {
     public String login(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
 
         Authentication auth =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(username, password));
 
         SecurityContextHolder.getContext().setAuthentication(auth);
         request.getSession().setAttribute("LOGIN", auth);
