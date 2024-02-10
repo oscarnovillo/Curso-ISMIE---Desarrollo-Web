@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 logs/*.log
 secret**.properties
+**private**
 
 ### STS ###
 .apt_generated
