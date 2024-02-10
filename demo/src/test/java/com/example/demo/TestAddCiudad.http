@@ -1,0 +1,64 @@
+### Testing API
+GET http://localhost:8080/api/auth/loginToken
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "pedro",
+  "password": {{secret}}
+}
+
+
+> {%
+    client.global.set("token", response.body.access_token)
+%}
+
+<> 2024-02-09T202728.200.json
+<> 2024-02-09T202634.200.json
+<> 2024-02-09T202527.200.json
+<> 2024-02-09T194634.200.json
+<> 2024-02-09T194556.200.json
+
+### Add Alumno
+GET http://localhost:8080/api/alumnos
+Authorization: Bearer {{token}}
+
+> {%
+    client.test(" comprobar alumnos", function () {
+        client.assert(response.status === 200, "status es 200")
+        console.log(response.body)
+        client.assert(response.body[0].name === "Juanito", "no hay 3 alumnos")
+        client.assert(response.body.length === 5, "no hay 3 alumnos")
+
+
+    })
+%}
+
+
+### Add Ciudad Graphql
+
+GRAPHQL http://localhost:8080/graphql
+Authorization: Bearer {{token}}
+
+mutation  addCiudad($nombre: String!) {
+    addCiudad( nombre : $nombre){
+        id
+        nombre
+    }
+
+}
+
+{
+  "nombre": "cuenca"
+}
+
+
+> {%
+    client.test("error Unauthorized", function () {
+        client.assert(response.body.errors != null, "hay errores")
+    })
+
+%}
+<> 2024-02-09T202638.200.json
+
+
