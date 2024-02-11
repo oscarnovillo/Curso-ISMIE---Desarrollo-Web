@@ -1,6 +1,8 @@
 package org.example.backend.ui.controllers.graphql
 
+import jakarta.annotation.security.RolesAllowed
 import org.example.backend.domain.modelo.Pelicula
+import org.example.backend.domain.modelo.PeliculaInput
 import org.example.backend.domain.servicios.PeliculasServicios
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
@@ -23,8 +25,9 @@ class PeliculaController(
     fun getPelicula(@Argument id: String) = peliculasServicios.getPeliculaById(UUID.fromString(id))
 
     @MutationMapping
-    fun addPelicula(@Argument id: UUID,@Argument titulo : String) =
+    @RolesAllowed("ADMIN")
+    fun addPelicula(@Argument peliculaInput: Pelicula) =
         peliculasServicios.addPelicula(
-            Pelicula(id,titulo)
+            peliculaInput
         )
 }

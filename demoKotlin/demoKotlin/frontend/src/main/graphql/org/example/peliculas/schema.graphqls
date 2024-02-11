@@ -3,18 +3,18 @@ scalar UUID
 type Pelicula{
     id: UUID!
     titulo: String!
-#    duracion: Int!
-#    genero: String!
-#    director: String!
-#    anio: Int!
-#    actores: [Actor!]!
+    #    duracion: Int!
+    #    genero: String!
+    #    director: String!
+    #    anio: Int!
+    #    actores: [Actor!]!
 }
 
 type Actor {
     id: UUID!
     nombre: String!
-#    edad: Int!
-#    peliculas: [Pelicula!]!
+    #    edad: Int!
+    #    peliculas: [Pelicula!]!
 }
 
 type Query {
@@ -30,7 +30,7 @@ type Mutation {
 }
 
 input PeliculaInput {
-    id: UUID!
+    id: String!
     titulo: String!
 }
 

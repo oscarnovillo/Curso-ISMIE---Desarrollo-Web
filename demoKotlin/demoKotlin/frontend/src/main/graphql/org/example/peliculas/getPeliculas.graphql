@@ -1,0 +1,6 @@
+query GetPeliculas {
+    getPeliculas {
+        id
+        titulo
+    }
+}

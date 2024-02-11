@@ -1,0 +1,6 @@
+mutation addPelicula($pelicula: PeliculaInput!){
+    addPelicula(peliculaInput: $pelicula){
+        id
+        titulo
+    }
+}

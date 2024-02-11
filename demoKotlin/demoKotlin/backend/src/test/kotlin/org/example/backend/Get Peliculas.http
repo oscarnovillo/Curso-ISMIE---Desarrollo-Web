@@ -35,16 +35,18 @@ query getPelucila($id: String!){
 
 GRAPHQL http://localhost:8080/graphql
 
-mutation createPelicula($id: UUID!, $titulo: String!){
-    addPelicula(id: $id,titulo: $titulo) {
+mutation createPelicula($pelicula: PeliculaInput!){
+    addPelicula(peliculaInput: $pelicula) {
         id
         titulo
     }
 }
 
 {
+  "pelicula": {
     "id": "{{$random.uuid}}",
     "titulo": "{{titulo}}"
+    }
 }
 
 > {%
