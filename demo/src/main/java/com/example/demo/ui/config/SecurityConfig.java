@@ -63,7 +63,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
-                //.httpBasic(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
                 //.formLogin(Customizer.withDefaults())
 //                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)

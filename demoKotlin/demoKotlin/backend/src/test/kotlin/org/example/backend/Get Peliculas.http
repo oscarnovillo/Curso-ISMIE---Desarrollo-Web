@@ -1,0 +1,68 @@
+
+### Get peliculas
+
+GRAPHQL http://localhost:8080/graphql
+
+
+query {
+  getPeliculas {
+      id
+      titulo
+  }
+}
+
+### Get pelicula
+
+GRAPHQL http://localhost:8080/graphql
+
+
+query getPelucila($id: String!){
+    getPelicula(id: $id) {
+        id
+        titulo
+    }
+}
+
+{
+   "id": "cc6ce59c-ca30-497e-bd52-a83575a465c7"
+}
+
+### Create pelicula
+
+< {%
+   request.variables.set("titulo",Math.random().toString(36).substring(2,17) )
+ %}
+
+GRAPHQL http://localhost:8080/graphql
+
+mutation createPelicula($id: UUID!, $titulo: String!){
+    addPelicula(id: $id,titulo: $titulo) {
+        id
+        titulo
+    }
+}
+
+{
+    "id": "{{$random.uuid}}",
+    "titulo": "{{titulo}}"
+}
+
+> {%
+   client.global.set("id",response.body.data.addPelicula.id )
+ %}
+
+### Get pelicula
+
+GRAPHQL http://localhost:8080/graphql
+
+
+query getPelucila($id: String!){
+    getPelicula(id: $id) {
+        id
+        titulo
+    }
+}
+
+{
+   "id": "{{id}}"
+}

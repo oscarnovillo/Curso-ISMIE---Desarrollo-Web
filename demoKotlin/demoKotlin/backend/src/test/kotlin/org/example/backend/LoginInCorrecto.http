@@ -1,0 +1,36 @@
+### Login token
+
+GET http://localhost:8080/api/auth/loginToken
+Content-Type: application/json
+
+{
+  "username":"pedro",
+  "password":"1234"
+}
+
+> {%
+    client.global.set("token", response.body.access_token)
+%}
+
+### Get all users
+GET http://localhost:8080/users
+Authorization: Bearer {{token}}
+
+
+> {%
+    client.test(" get Users sin permiso", function () {
+        client.assert(response.status === 403, "status es 200")
+    })
+%}
+
+
+### Get all users
+GET http://localhost:8080/users/dto
+Authorization: Bearer {{token}}
+
+
+> {%
+    client.test(" get user con permiso", function () {
+        client.assert(response.status === 200, "status es 200")
+    })
+%}
