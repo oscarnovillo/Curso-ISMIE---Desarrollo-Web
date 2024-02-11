@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script>
+
+        $(document).ready(function() {
+            $.ajax({
+                url: "http://localhost:8080/peliculas"
+            }).then(function(data) {
+                $.each(data,function(d,results) {
+                    $("#peliculas tbody").append(
+                        "<tr>"
+                        + "<td>" + results.id + "</td>"
+                        + "<td>" + results.titulo + "</td>"
+                        + "</tr>")
+                });
+                console.log(data);
+            });
+        });
+    </script>
+</head>
+<body>
+
+<table id="peliculas" border="1">
+    <thead>
+        <th>Id</th>
+        <th>Titulo</th>
+    </thead>
+    <tbody></tbody>
+    </table>
+
+</body>
+</html>

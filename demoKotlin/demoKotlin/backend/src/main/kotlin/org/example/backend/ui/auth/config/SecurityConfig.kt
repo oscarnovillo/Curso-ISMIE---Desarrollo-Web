@@ -32,7 +32,7 @@ class SecurityConfig(
     private val logoutHandler: LogoutHandler,
 ) {
 
-    val WHITE_LIST_URL = arrayOf("/api/auth/loginToken","/graphql","/graphiql")
+    val WHITE_LIST_URL = arrayOf("/api/auth/loginToken","/graphql","/graphiql","/index.html","/peliculas")
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
