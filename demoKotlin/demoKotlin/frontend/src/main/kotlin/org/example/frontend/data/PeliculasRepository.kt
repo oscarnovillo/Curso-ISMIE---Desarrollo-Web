@@ -2,6 +2,7 @@ package org.example.frontend.data
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
+import org.example.frontend.common.ServiceResult
 import org.example.frontend.domain.modelo.Pelicula
 import org.example.peliculas.AddPeliculaMutation
 import org.example.peliculas.GetPeliculasQuery
@@ -18,7 +19,7 @@ class PeliculasRepository(
            Pelicula(it.id, it.titulo)
        } ?: emptyList()
 
-    suspend fun addPelicula(pelicula: Pelicula) : Pelicula? {
+    suspend fun addPelicula(pelicula: Pelicula) : ServiceResult<Pelicula> {
         val response = try {
             apolloClient.mutation(
                 AddPeliculaMutation(
@@ -28,16 +29,18 @@ class PeliculasRepository(
                     )
                 )
             ).execute()
-        } catch(exception: ApolloException) {
+        } catch (exception: ApolloException) {
             // Network error, not much to do
-            throw exception
+            return ServiceResult.ErrorResult(exception.message ?: "Unknown error")
         }
+
+
         return response.data?.let {
             it.addPelicula?.let {
-               Pelicula(it.id, it.titulo)
+                ServiceResult.Success(Pelicula(it.id, it.titulo))
             }
-        } ?: response.errors?.let {
-            throw Exception(it.joinToString { it.message })
+        } ?: response.errors.let {
+            ServiceResult.ErrorResult(it?.let{it.joinToString { it.message }} ?: "Unknown error")
         }
 
     }

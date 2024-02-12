@@ -7,8 +7,11 @@ import javafx.scene.control.Alert
 import javafx.scene.control.ListView
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.example.frontend.common.ServiceResult
 import org.example.frontend.data.LoginRepository
 import org.example.frontend.data.PeliculasRepository
 import org.example.frontend.data.modelo.AuthenticationRequest
@@ -73,21 +76,19 @@ class Pantalla1Controller(
 
     fun addPeliculas() {
         GlobalScope.launch {
-            try {
-                val response = peliculasRepository.addPelicula(
+
+           when (val result = peliculasRepository.addPelicula(
                     domainPelicula(
                         titulo = tituloPelicula.text
                     )
-                )
-                response?.let {
-                    peliculas.items.add(it)
-                }
-            }
-            catch (e: Exception) {
-                Platform.runLater {
-                    Alert(Alert.AlertType.ERROR, e.message).showAndWait()
-                }
-            }
+                )) {
+               is ServiceResult.ErrorResult -> withContext(Dispatchers.Main) {
+                   Alert(Alert.AlertType.ERROR, result.mesagge).showAndWait()
+               }
+               is ServiceResult.Success -> peliculas.items.addAll(result.data)
+           }
+
+
         }
 
     }
