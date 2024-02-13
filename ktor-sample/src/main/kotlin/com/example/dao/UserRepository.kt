@@ -1,13 +1,11 @@
-package com.example.service
+package com.example.dao
 
-import com.example.dao.DatabaseConector
-import com.example.dao.ExposedUser
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.koin.core.annotation.Factory
 
 @Factory
-class UserService(private val database: DatabaseConector) {
+class UserRepository(private val database: DatabaseConector) {
     object Users : Table() {
         val id = integer("id").autoIncrement()
         val name = varchar("name", length = 50)

@@ -1,6 +1,5 @@
 package com.example.dao
 
-import com.example.service.UserService
 import joseluisgs.dev.config.AppConfig
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
@@ -23,7 +22,7 @@ class DatabaseConector(
             password = appConfig.applicationConfiguration.property("database.password").getString()
         )
         transaction(database) {
-            SchemaUtils.create(UserService.Users)
+            SchemaUtils.create(UserRepository.Users)
         }
     }
 

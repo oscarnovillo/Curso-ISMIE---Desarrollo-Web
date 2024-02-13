@@ -1,7 +1,7 @@
 package com.example.routing
 
 import com.example.dao.ExposedUser
-import com.example.service.UserService
+import com.example.dao.UserRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -22,23 +22,23 @@ fun Application.userRoutes(){
     )
 
 
-    val userService : UserService by inject()
+    val userRepository : UserRepository by inject()
 
     routing {
         // Create user
         post("/users") {
             val user = call.receive<ExposedUser>()
-            val id = userService.create(user)
+            val id = userRepository.create(user)
             call.respond(HttpStatusCode.Created, id)
         }
         get("/users") {
-            val usuarios = userService.readAll()
+            val usuarios = userRepository.readAll()
             call.respond(HttpStatusCode.OK, usuarios ?: emptyList())
         }
         // Read user
         get("/users/{id}") {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
-            val user = userService.read(id)
+            val user = userRepository.read(id)
             if (user != null) {
                 call.respond(HttpStatusCode.OK, user)
             } else {
@@ -49,13 +49,13 @@ fun Application.userRoutes(){
         put("/users/{id}") {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
             val user = call.receive<ExposedUser>()
-            userService.update(id, user)
+            userRepository.update(id, user)
             call.respond(HttpStatusCode.OK)
         }
         // Delete user
         delete("/users/{id}") {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
-            userService.delete(id)
+            userRepository.delete(id)
             call.respond(HttpStatusCode.OK)
         }
     }
