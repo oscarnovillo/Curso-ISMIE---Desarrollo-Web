@@ -52,6 +52,7 @@ class SecurityConfig(
             }
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
+
             .logout { logout ->
                 logout.logoutUrl("/api/auth/logout")
                     .addLogoutHandler(logoutHandler)

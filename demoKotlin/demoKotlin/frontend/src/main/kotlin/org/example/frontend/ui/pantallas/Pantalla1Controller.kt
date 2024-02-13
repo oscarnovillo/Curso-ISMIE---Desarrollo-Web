@@ -7,16 +7,14 @@ import javafx.scene.control.Alert
 import javafx.scene.control.ListView
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.example.frontend.common.ServiceResult
 import org.example.frontend.data.LoginRepository
 import org.example.frontend.data.PeliculasRepository
 import org.example.frontend.data.modelo.AuthenticationRequest
 import org.example.frontend.data.retrofit.CacheAuthorization
 import org.example.peliculas.type.Pelicula
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import java.net.URL
 import java.util.*
@@ -27,6 +25,8 @@ class Pantalla1Controller(
     private val peliculasRepository: PeliculasRepository,
     private val loginRepository: LoginRepository,
     private val cacheAuthorization: CacheAuthorization,
+    @Qualifier("mainDispatcher")
+    private  val mainDispatcher: CoroutineDispatcher = Dispatchers.Main
 
 ) : Initializable {
 
@@ -44,30 +44,29 @@ class Pantalla1Controller(
     }
 
     fun login() {
-        GlobalScope.launch {
-            val response = loginRepository.login(
+        CoroutineScope(Dispatchers.IO).launch {
+            when (val response = loginRepository.login(
                 AuthenticationRequest(
                     username = "admin",
                     password = "1234"
                 )
+            )) {
+                is ServiceResult.ErrorResult -> withContext(Dispatchers.Main) {
+                    Alert(Alert.AlertType.ERROR, response.mesagge).showAndWait()
+                }
 
-            )
-
-            val alert : ()-> Unit = {
-                Alert(Alert.AlertType.ERROR,"usuario no valido").showAndWait()
+                is ServiceResult.Success -> {
+                    resultados.text = response.data.accessToken
+                    cacheAuthorization.accesToken = response.data.accessToken
+                    cacheAuthorization.refreshToken = response.data.refreshToken
+                }
             }
-            response?.let{
-
-                cacheAuthorization.accesToken = it.accessToken
-                cacheAuthorization.refreshToken = it.refreshToken
-                resultados.text = it.accessToken
-            } ?: alert
 
         }
     }
 
     fun getPeliculas() {
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             val response = peliculasRepository.getPeliculas()
             peliculas.items.addAll(response)
         }
@@ -75,7 +74,7 @@ class Pantalla1Controller(
     }
 
     fun addPeliculas() {
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
 
            when (val result = peliculasRepository.addPelicula(
                     domainPelicula(
